@@ -401,7 +401,12 @@ def _compose_builder_prompt(
 
 
 def _load_builder_template(template_name: str):
-    template = _load_template(template_name)
+    # Check if it's a predefined template
+    if template_name in PROMPT_TEMPLATES:
+        template = _load_template(template_name)
+    else:
+        # Use the custom text provided by the user
+        template = template_name.strip() if template_name.strip() else DEFAULT_PROMPT
     return template, template
 
 
@@ -656,6 +661,7 @@ def _build_demo(default_model_dir: Path, default_device: int) -> gr.Blocks:
                                 label="Starter Prompt",
                                 choices=list(PROMPT_TEMPLATES.keys()),
                                 value="Neon cafe push-in",
+                                allow_custom_value=True,
                             )
                             with gr.Row():
                                 load_template_button = gr.Button("Load Into Builder")
