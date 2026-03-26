@@ -30,10 +30,11 @@ echo "GPU: ${DEVICE}"
 
 export PYTHONUNBUFFERED=1
 export WAN_TI2V_CKPT_DIR="$CKPT_DIR"
+export CUDA_VISIBLE_DEVICES="$DEVICE"
 
 exec .venv/bin/python app_ti2v.py \
   --host "$HOST" \
   --port "$PORT" \
-  --device "$DEVICE" \
+  --device 0 \
   --ckpt-dir "$CKPT_DIR" \
   --no-open-browser
