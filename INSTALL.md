@@ -1,5 +1,36 @@
 # Installation Guide
 
+## Install with uv
+
+This is the most direct way to set up a local environment for the repo and run the TI2V web demo.
+
+```bash
+uv venv .venv --python 3.10
+uv sync --python .venv/bin/python --extra dev --extra demo
+```
+
+`flash-attn` is not required for the TI2V demo. If you want the acceleration path later, install it separately after the base environment is working:
+
+```bash
+uv pip install --python .venv/bin/python --upgrade pip setuptools wheel
+uv pip install --python .venv/bin/python flash-attn --no-build-isolation
+```
+
+### Launch the TI2V Web Demo
+
+The app defaults to `/mnt/nas10_shared/models/Wan2.2-TI2V-5B`, which matches the shared model location on this machine.
+
+```bash
+uv run --python .venv/bin/python python app_ti2v.py --host 0.0.0.0 --port 7860
+```
+
+If you want to point to another checkpoint path:
+
+```bash
+WAN_TI2V_CKPT_DIR=/path/to/Wan2.2-TI2V-5B \
+uv run --python .venv/bin/python python app_ti2v.py --host 0.0.0.0 --port 7860
+```
+
 ## Install with pip
 
 ```bash
